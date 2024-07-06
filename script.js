@@ -10,11 +10,11 @@ const perguntas = [
         alternativas: [
             {
                 texto: "Satoru Gojo",
-                afirmacao: "afirmação"
+                afirmacao: "Ele e brabo"
             },
             {
                 texto: "Sukuna",
-                afirmacao: "afirmação"
+                afirmacao: "Simplesmente Sukuna"
             }
         ]
     },
@@ -23,11 +23,11 @@ const perguntas = [
         alternativas: [
             {
                 texto: "A favor",
-                afirmacao: "afirmação"
+                afirmacao: "E tiro pra todo lado"
             },
             {
                 texto: "Contra",
-                afirmacao: "afirmação"
+                afirmacao: "Nao e tiro para todo lado"
             }
         ]
     },
@@ -36,11 +36,11 @@ const perguntas = [
         alternativas: [
             {
                 texto: "Fifa",
-                afirmacao: "afirmação"
+                afirmacao: "Escolheu um jogo bugado."
             },
             {
                 texto: "Pes",
-                afirmacao: "afirmação"
+                afirmacao: "Jogo bom, mas que ta ruim hoje em dia."
             }
         ]
     },
@@ -49,11 +49,11 @@ const perguntas = [
         alternativas: [
             {
                 texto: "Sim",
-                afirmacao: "afirmação"
+                afirmacao: "Você realmente faria isso?"
             },
             {
                 texto: "Não",
-                afirmacao: "afirmação"
+                afirmacao: "Parabens você ama sua mãe!"
             }
         ]
     },
@@ -62,41 +62,52 @@ const perguntas = [
         alternativas: [
             {
                 texto: "Coca-cola",
-                afirmacao: "afirmação"
+                afirmacao: "O melhor"
             },
             {
                 texto: "Pepsi",
-                afirmacao: "afirmação"
+                afirmacao: "Sério isso. "
             }
         ]
     },
 ];
+
 
 let atual = 0;
 let perguntaAtual;
 let historiaFinal = "";
 
 function mostraPergunta() {
+    if (atual >= perguntas.length) {
+        mostraResultado();
+        return;
+    }
     perguntaAtual = perguntas[atual];
     caixaPerguntas.textContent = perguntaAtual.enunciado;
+    caixaAlternativas.textContent = "";
     mostraAlternativas();
 }
 
-function mostraAlternativas() {
-    for (const alternativa of perguntaAtual.alternativas) {
+function mostraAlternativas(){
+    for(const alternativa of perguntaAtual.alternativas) {
         const botaoAlternativas = document.createElement("button");
         botaoAlternativas.textContent = alternativa.texto;
-        botaoAlternativas.addEventListener("click",  () => respostaSelecionada(alternativa) )   
+        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
         caixaAlternativas.appendChild(botaoAlternativas);
-        
     }
 }
 
-function respostaSelecionada(opcaoSelecionada){
-            const afirmacoes = opcaoSelecionada.afirmacoes;
-            historiaFinal =  afirmacoes;   
-            atual++;
-            mostraPergunta();
-           
+function respostaSelecionada(opcaoSelecionada) {
+    const afirmacoes = opcaoSelecionada.afirmacao;
+    historiaFinal += afirmacoes + " ";
+    atual++;
+    mostraPergunta();
 }
+
+function mostraResultado() {
+    caixaPerguntas.textContent = "Em 2049...";
+    textoResultado.textContent = historiaFinal;
+    caixaAlternativas.textContent = "";
+}
+
 mostraPergunta();
